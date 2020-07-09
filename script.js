@@ -58,6 +58,13 @@ function setTime() {
 	}, 1000);
 }
 
+
+function showQ(question) {
+	questionElement.innerText = question.question;
+}
+
+
+
 function nextQuestion() {
 	// showQ(shuffleQ[currentQ]);
 	questionElement.innerHTML = question[0];
@@ -65,45 +72,22 @@ function nextQuestion() {
 	button.addEventListener('click', correctF);
 }
 
-function showQ(question) {
-	questionElement.innerText = question.question;
-}
-
 function correctF() {
 	final.innerHTML = c[0];
 	answerButtonElement.classList.add('hide');
 	next.classList.remove('hide');
+	scoreTracker.innerHTML = s++;
 	nex.addEventListener('click', partTwo);
 }
 
 function partTwo() {
+	final.classList.add('hide');
 	next.classList.add('hide');
 	answerButtonElement.classList.remove('hide');
 	questionElement.innerHTML = question[1];
 	answer.innerHTML = a1[1];
 	button.addEventListener('click');
 }
-
-function chooseAnswer() {}
-
-// let question = [
-// 	{
-// 		question: 'What is 2+2',
-// 		answer: '4',
-// 		choices: [ '3', '4', '6', '13' ]
-// 	},
-
-// 	{
-// 		question: 'What is 5+5',
-// 		answer: '10',
-// 		choices: [ '9', '12', '8', '10' ]
-// 	},
-// 	{
-// 		question: 'What color is blue',
-// 		answer: 'blue',
-// 		choices: [ 'blue', 'red', 'green', 'purple' ]
-// 	}
-// ];
 
 var question = [ 'What is 1+1 <br /><br />', 'What is blue <br /><br />', 'What is soccer<br /><br />' ];
 var a1 = [ '2', 'red', 'real' ];
