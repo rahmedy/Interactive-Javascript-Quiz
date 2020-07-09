@@ -10,6 +10,7 @@
 </head>
 
 <body>
+  <a href="scores.html">Show Scores </a>
   <div class="container" id="main">
     <header>
       <h1>Welcome to the Javascript Quiz !!</h1>
@@ -23,17 +24,24 @@
       </div>
     </div>
   </div>
+  </div>
 
-
-  <div class="description">
+  <h1 class="time"></h1>
+  <div class="description2">
     <div id="question-container" class="hide">
-      <div id="the question">Question</div>
+      <h2><text id="score0">0</text></h2>
+      <div id="the-question">Question</div>
       <div id="ans-buttons" class="btn-grid">
-        <button class="btn">A1</button>
-        <button class="btn">A2</button>
-        <button class="btn">A3</button>
-        <button class="btn">A4</button>
-      </div>
+        <button class="btn" id="c1" onclick="correctF()">A1</button>
+        <button class="btn" id="c2">A2</button>
+        <button class="btn" id="c3">A3</button>
+        <button class="btn" id="c4">A4</button>
+        </div>
+        <div id="answer001"></div>
+        <div id="next" class = "hide">
+          <button class="btn" id="nex">Next</button>
+        </div>
+
 </body>
 
 </html>
