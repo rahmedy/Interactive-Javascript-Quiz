@@ -1,97 +1,187 @@
 // This will be the ones from the first page
-let startButton = document.getElementById('main');
-let questionContainer = document.getElementById('question-container');
-let shuffleQ, currentQ;
-let questionElement = document.getElementById('the-question');
-let answerButtonElement = document.getElementById('ans-buttons');
-let answer = document.getElementById('c1');
-let answerTwo = document.getElementById('c2');
-let answerThree = document.getElementById('c3');
-let final = document.getElementById('answer001');
-let next = document.getElementById('next');
-let nex = document.getElementById('nex');
+var questionIndex = 0;
+var currentTime = document.querySelector('#theTime');
+var timer = document.querySelector('#start-btn');
+var questionsDiv = document.querySelector('.description');
+var wrapper = document.querySelector('#main');
 
-let scoreTracker = document.getElementById('score0');
+var secondsLeft = 80;
+var holdInterval = 0;
+var loss = 10;
+var score = 0;
 
-var button = document.getElementsByClassName('btn');
-var s = 0;
-s++;
+var ulCreate = document.createElement('ul');
 
-// this will be the one for the highscores page
-// var scoreList = document.getElementById("score-list");
-// var list = [];
+timer.addEventListener('click', function() {
+	// checking for 0, will alert times up!
+	if (holdInterval === 0) {
+		holdInterval = setInterval(function() {
+			secondsLeft--;
+			currentTime.textContent = 'Time: ' + secondsLeft;
 
-// function showScores(){
-// 	scoreList.innerHTML = "";
-
-// 	for (var i = 0; i < list.length; i++ ){
-// 		var results = list[i];
-// 	}
-// }
-
-//  This is for the timer
-var timeEl = document.querySelector('.time');
-var secondsLeft = 20;
-
-// this will make the start quiz button call the start quix function whihc will strat the timer and dispaly the questions and answer choices
-startButton.addEventListener('click', startQuiz);
-
-// this is the startQuiz function and when it is clicked it will start everything inside it
-function startQuiz() {
-	startButton.classList.add('hide');
-	// shuffleQ = question.sort(() => Math.random() - 0.5);
-	currentQ = 0;
-	questionContainer.classList.remove('hide');
-	setTime();
-	nextQuestion();
-}
+			if (secondsLeft <= 0) {
+				clearInterval(holdInterval);
+				allDone();
+				currentTime.textContent = "Time's up!";
+			}
+		}, 1000);
+	}
+	render(questionIndex);
+});
 
 // this will be the time that startes once the user clicks on the Start Quiz button
-function setTime() {
-	var timerInterval = setInterval(function() {
-		secondsLeft--;
-		timeEl.textContent = ' Time: ' + secondsLeft;
+function render(questionIndex) {
+	// Clears existing data
+	questionsDiv.innerHTML = '';
+	ulCreate.innerHTML = '';
 
-		if (secondsLeft === 0) {
-			clearInterval(timerInterval);
+	for (var i = 0; i < questions.length; i++) {
+		// appends a title
+		var userQuestion = questions[questionIndex].title;
+		var userChoices = questions[questionIndex].choices;
+		questionsDiv.textContent = userQuestion;
+	}
+
+	userChoices.forEach(function(newItem) {
+		var listItem = document.createElement('li');
+		listItem.textContent = newItem;
+		questionsDiv.appendChild(ulCreate);
+		ulCreate.appendChild(listItem);
+		listItem.addEventListener('click', compare);
+	});
+}
+
+function compare(event) {
+	var element = event.target;
+
+	if (element.matches('li')) {
+		var createDiv = document.createElement('div');
+		createDiv.setAttribute('id', 'createDiv');
+		// Correct condition
+		if (element.textContent == questions[questionIndex].answer) {
+			score++;
+			createDiv.textContent = 'Correct! The answer is:  ' + questions[questionIndex].answer;
+			// Correct condition
+		} else {
+			// -5 off the loss
+			secondsLeft = secondsLeft - 15;
+			createDiv.textContent = 'Wrong! The correct answer is:  ' + questions[questionIndex].answer;
 		}
-	}, 1000);
+	}
+
+	questionIndex++;
+
+	if (questionIndex >= questions.length) {
+		done();
+		createDiv.textContent =  'You got  ' + score + '/' + questions.length + ' Correct!';
+	} else {
+		render(questionIndex);
+	}
+	questionsDiv.appendChild(createDiv);
+}
+function done() {
+	questionsDiv.innerHTML = '';
+	currentTime.innerHTML = '';
+
+	var createH1 = document.createElement('h1');
+	createH1.setAttribute('id', 'createH1');
+	createH1.textContent = 'Time is up!';
+
+	questionsDiv.appendChild(createH1);
+	// paragraph
+
+	var createP = document.createElement('p');
+	createP.setAttribute('id', 'createP');
+
+	questionsDiv.appendChild(createP);
+
+	// this is the time remaining and its replaced with a score
+	if (secondsLeft >= 0) {
+		var timeRemaining = secondsLeft;
+		var createP2 = document.createElement('p');
+		clearInterval(holdInterval);
+		createP.textContent = 'Your final score is: ' + timeRemaining;
+
+		questionsDiv.appendChild(createP2);
+	}
+
+	//  created a label
+	var createLabel = document.createElement('label');
+	createLabel.setAttribute('id', 'createLabel');
+	createLabel.textContent = 'Enter your initials: ';
+
+	questionsDiv.appendChild(createLabel);
+
+	var createInput = document.createElement('input');
+	createInput.setAttribute('type', 'text');
+	createInput.setAttribute('id', 'initials');
+	createInput.textContent = '';
+
+	questionsDiv.appendChild(createInput);
+
+	// submit button for high scores!
+	var createSubmit = document.createElement('button');
+	createSubmit.setAttribute('type', 'submit');
+	createSubmit.setAttribute('id', 'Submit');
+	createSubmit.textContent = 'Submit';
+
+	questionsDiv.appendChild(createSubmit);
+
+	createSubmit.addEventListener('click', function() {
+		var initials = createInput.value;
+
+		if (initials === null) {
+			console.log('No value entered!');
+		} else {
+			var finalScore = {
+				initials: initials,
+				score: timeRemaining
+			};
+			console.log(finalScore);
+			var allScores = localStorage.getItem('allScores');
+			if (allScores === null) {
+				allScores = [];
+			} else {
+				allScores = JSON.parse(allScores);
+			}
+			allScores.push(finalScore);
+			var newScore = JSON.stringify(allScores);
+			localStorage.setItem('allScores', newScore);
+			// this leads a user to a new highscore page
+			window.location.replace('./scores.html');
+		}
+	});
 }
 
+let questions = [
+	{
+		title: '1. How many Superbowls has Peyton Manning won?',
+		choices: [ '2', '5', '1', '3' ],
+		answer: '2'
+	},
+	{
+		title: '2. What NBA team came back from being down 3-1 in the finals?',
+		choices: [ 'Cavaliars', 'Warriors', 'Bulls', 'Knicks' ],
+		answer: 'Cavaliars'
+	},
+	{
+		title: '3. What sport franchise is worth the most',
+		choices: [ 'FC Barcelona', 'Dallas Cowboys', 'Real Madrid', 'LA Dogers?' ],
+		answer: 'Dallas Cowboys'
+	},
+	{
+		title: '4. What team lost the Superbowl after being up 28-3 at halftime?',
+		choices: [ 'Colts', 'Patriots', 'Seahawks', 'Falcons' ],
+		answer: 'Falcons'
+	},
+	{
+		title: '5. Who has the most NFL MVPs?',
+		choices: [ 'Jim Brown', 'Tom brady', 'Dan Marino', 'Peyton Manning' ],
+		answer: 'Peyton Manning'
+	}
+];
 
-function showQ(question) {
-	questionElement.innerText = question.question;
-}
 
-
-
-function nextQuestion() {
-	// showQ(shuffleQ[currentQ]);
-	questionElement.innerHTML = question[0];
-	answer.innerHTML = a1[0];
-	button.addEventListener('click', correctF);
-}
-
-function correctF() {
-	final.innerHTML = c[0];
-	answerButtonElement.classList.add('hide');
-	next.classList.remove('hide');
-	scoreTracker.innerHTML = s++;
-	nex.addEventListener('click', partTwo);
-}
-
-function partTwo() {
-	final.classList.add('hide');
-	next.classList.add('hide');
-	answerButtonElement.classList.remove('hide');
-	questionElement.innerHTML = question[1];
-	answer.innerHTML = a1[1];
-	button.addEventListener('click');
-}
-
-var question = [ 'What is 1+1 <br /><br />', 'What is blue <br /><br />', 'What is soccer<br /><br />' ];
-var a1 = [ '2', 'red', 'real' ];
-var a2 = [ '5', 'blue', 'barca' ];
-var a3 = [ '10', 'green', 'pairs' ];
-
-var c = [ 'Correct', 'Correct', 'Correct', 'Correct' ];
+// goBack.addEventListener('click', function() {
+// 	window.location.replace('./index.html');
+// });

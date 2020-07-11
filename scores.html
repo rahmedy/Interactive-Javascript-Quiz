@@ -5,22 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="scores.css" />
+    <script defer src="scores.js"> </script>
     <title>Scores</title>
 </head>
 
 <body>
     <div class="container">
-        <header>
-            <h1>Highscores</h1>
-        </header>
+        <div id="info"> </div>
+        <div id="results">
+            <h1>Scores</h1>
+            <ul id="theScores"></ul>
 
-
-        <div class="info">
-            <ul id="score-list"></ul>
             <a href="index.html">
-                <button class="btn"> Go back to Quiz </button>
+                <button class="bBtn"> Go back to Quiz </button>
             </a>
-            <buttonn class="btn"> Clear Scores </button>
+            <button class="cBtn" value="reset"> Clear Scores </button>
         </div>
     </div>
 

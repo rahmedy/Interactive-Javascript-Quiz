@@ -15,8 +15,8 @@ body,
 body {
 	font-family: sans-serif;
 	color: black;
-	background: rgb(31, 132, 242);
-	background: linear-gradient(90deg, rgba(31, 132, 242, 1) 0%, rgba(249, 166, 166, 1) 50%, rgba(240, 237, 3, 1) 100%);
+	background: rgb(34, 193, 195);
+	background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 89%);
 }
 .container {
 	padding-top: 30px;
@@ -32,8 +32,8 @@ header {
 }
 
 a:link {
-	color:white;
-  }
+	color: white;
+}
 
 #the-question {
 	text-align: center;
@@ -41,14 +41,26 @@ a:link {
 	font-size: 30px;
 }
 
+#theTime {
+	float: right;
+	display: block;
+	color: black;
+	font-size: 20px;
+}
+
+h1 {
+	font-size: 40px;
+}
+
 .description {
-	color: hsl(206, 17%, 28%);
-	font-size: 18px;
+	color: black;
+	font-size: 25px;
 	margin: 0 auto;
 	max-width: 800px;
 	text-align: center;
 	padding: 20px;
 	padding-top: 10px;
+	padding-right: 100px;
 }
 .description2 {
 	color: hsl(206, 17%, 28%);
@@ -65,13 +77,26 @@ a:link {
 	font-size: 30px;
 }
 
-
 .time {
 	font-size: 25px;
 	padding: 1px;
 	margin-right: 20px;
 	margin-top: 10px;
 	text-align: right;
+}
+
+li {
+	background-color: green;
+	margin-top: 30px;
+	padding: 15px 15px;
+	width: 60%;
+	font-size: 18px;
+	color: white;
+}
+
+ul {
+	list-style-type: lower-alpha;
+	text-align: center;
 }
 
 .btn {
@@ -88,7 +113,6 @@ a:link {
 	text-align: center;
 	cursor: pointer;
 }
-
 
 */ button[disabled] {
 	cursor: default;
@@ -110,10 +134,9 @@ a:link {
 		padding: 10px 15px;
 	}
 
-
-@media (max-width: 500px) {
-	.btn {
-		font-size: 0.8rem;
+	@media (max-width: 500px) {
+		.btn {
+			font-size: 0.8rem;
+		}
 	}
-}
 }

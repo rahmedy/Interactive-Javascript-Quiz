@@ -46,7 +46,21 @@ header {
 	font-size: 20px;
 	line-height: 22px;
 	margin: 16px 16px 16px 20px;
-	padding: 10px 25px;
+	padding: 10px px;
 	text-align: center;
 	cursor: pointer;
+}
+
+li {
+	background-color: white;
+	margin-top: 10px;
+	padding: 5px 1px;
+	width: 20%;
+	font-size: 20px;
+	color: black;
+}
+
+ul {
+	
+	text-align: center;
 }
