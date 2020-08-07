@@ -6,3 +6,5 @@ At the end the user will see their score and will be asked to type in their name
 The data will be saved so the user can refresh or restart the quiz and come back and see the scores 
 
 This project focuses on Functions within Javascript
+
+![](images/workingpic.png)
